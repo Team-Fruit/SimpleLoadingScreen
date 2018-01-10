@@ -11,32 +11,16 @@
 
 ## About
 
-**Observe Minecraft Server Status**
+**Customizable, Pluggable Loading Screen Mod**
 
-SimpleLoadingScreen is a mod that **monitors the server** and can be noticed as soon as the server starts up.
-You can also **log in automatically**.
-- Notify when the server starts up
-- Automatic login when the server starts up
-- Automatic reconnection (moved to multiplay screen) when disconnected from server
-- Automatic connection (Move to Multiplayer screen) when Minecraft starts up
+SimpleLoadingScreen is a mod that **customize loading screen**.
+You can also **create modules for this mod**.
 
 ## How to use
 
-![Usage](https://i.gyazo.com/e5bd353ea8bb7dbaf4d36257e161cca1.png)
-
-With the server to be monitored selected on the Multiplayer screen, you can change the monitoring mode to the following order by clicking on the mode screen displayed in the upper right of the screen.
-1. Monitor mode: Monitor the server and notify by sound.
-2. **Automatic login** mode: In addition to the monitoring mode, log in automatically.
-3. Disabled: Do nothing.
-
-In addition, it is possible to set details such as Ping 's interval, notification sound etc from the setting screen of the Mod screen.
-
-### Video
-[![How to use SimpleLoadingScreen Mod](https://img.youtube.com/vi/Uj-l8hasASc/0.jpg)](https://www.youtube.com/watch?v=Uj-l8hasASc)
-
 ## Downloads
 
-Downloads can be found on [CurseForge](https://minecraft.curseforge.com/projects/SimpleLoadingScreen) or on the [GitHub](https://github.com/Team-Fruit/SimpleLoadingScreen/releases).
+Downloads can be found on the [GitHub](https://github.com/Team-Fruit/SimpleLoadingScreen/releases).
 
 ## Contacts
 
