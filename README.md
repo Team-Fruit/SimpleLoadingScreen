@@ -5,10 +5,6 @@
 
 # SimpleLoadingScreen
 
-[![CurseForge Versions](http://cf.way2muchnoise.eu/versions/SimpleLoadingScreen.svg)](https://minecraft.curseforge.com/projects/SimpleLoadingScreen/files)
-
-[![SimpleLoadingScreen](https://i.gyazo.com/236dc51bb26880ef29640794416c5492.png)](https://minecraft.curseforge.com/projects/SimpleLoadingScreen)
-
 ## About
 
 **Customizable, Pluggable Loading Screen Mod**
