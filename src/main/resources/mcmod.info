@@ -1,0 +1,25 @@
+{
+	"modListVersion": 2,
+	"modList": [
+		{
+			"modid": "simpleloadingscreen",
+			"name": "SimpleLoadingScreen",
+			"description": "Simple Customizable Loading Screen",
+			"mcversion": "",
+			"version": "",
+			"authorList": [
+				"Kamesuta"
+			],
+			"credits": "2017-2018 TeamFruit",
+			"dependants": [],
+			"dependencies": ["Forge"],
+			"parent": "",
+			"requiredMods": ["Forge"],
+			"logoFile": "assets/serverobserver/textures/banner.png",
+			"screenshots": [],
+			"updateUrl": "https://github.com/Team-Fruit/SimpleLoadingScreen/releases",
+			"url": "https://minecraft.curseforge.com/projects/simpleloadingscreen",
+			"useDependencyInformation": false
+		}
+	]
+}
