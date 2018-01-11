@@ -10,17 +10,17 @@ public interface IComponent {
 
 	File getWorkspace();
 
-	void registerRenderer(IRenderer renderer);
-
 	List<IRenderer> getRenderers();
 
-	IConfig getConfig(File configFile);
+	IConfig getConfig();
 
-	IConfig config(File configFile);
+	IConfig loadConfig(File configFile);
 
 	IModule getAuthorModule();
 
 	IBlackboard getBlackboard();
 
 	IBlackboard getGlobalBlackboard();
+
+	List<IConfigMapper> getConfigMappers();
 }

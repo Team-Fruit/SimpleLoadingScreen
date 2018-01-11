@@ -8,4 +8,10 @@ public interface IConfigProperty<T> {
 
 	void set(T value);
 
+	String getName();
+
+	T getDefault();
+
+	Class<T> getType();
+
 }

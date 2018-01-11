@@ -41,7 +41,7 @@ public class ModuleDispatcher {
 	 */
 	public void dispatchInit() {
 		for (final ModuleContainer moduleContainer : this.listenersRegistry)
-			for (final IComponent component : moduleContainer.getComponents()) {
+			for (final IComponent component : moduleContainer.getManager().getRenderingComponents()) {
 				final IScreen screen = new Screen(this.loadingScreen, component);
 				for (final IRenderer listener : component.getRenderers())
 					listener.init(screen);
@@ -55,7 +55,7 @@ public class ModuleDispatcher {
 	 */
 	public void dispatchDraw(final Consumer<IComponent> before, final Consumer<IComponent> after) {
 		for (final ModuleContainer moduleContainer : this.listenersRegistry)
-			for (final IComponent component : moduleContainer.getComponents()) {
+			for (final IComponent component : moduleContainer.getManager().getRenderingComponents()) {
 				final IScreen screen = new Screen(this.loadingScreen, component);
 				before.accept(component);
 				for (final IRenderer listener : component.getRenderers())
@@ -71,7 +71,7 @@ public class ModuleDispatcher {
 	 */
 	public void dispatchFinish() {
 		for (final ModuleContainer moduleContainer : this.listenersRegistry)
-			for (final IComponent component : moduleContainer.getComponents()) {
+			for (final IComponent component : moduleContainer.getManager().getRenderingComponents()) {
 				final IScreen screen = new Screen(this.loadingScreen, component);
 				for (final IRenderer listener : component.getRenderers())
 					listener.finish(screen);

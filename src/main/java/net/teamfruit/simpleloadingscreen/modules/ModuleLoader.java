@@ -69,7 +69,7 @@ public class ModuleLoader {
 
 		for (final Class<? extends IModule> clazz : this.modules)
 			try {
-				final ModuleContainer module = new ModuleContainer(clazz.newInstance());
+				final ModuleContainer module = new ModuleContainer(loadingScreen, clazz.newInstance());
 				Log.log.info("Loading module {} v{} by {}", module.getModule().getName(), module.getModule().getVersion(), module.getModule().getAuthor());
 				if (canModuleLoad(module))
 					this.loadedModules.add(module);
@@ -120,8 +120,7 @@ public class ModuleLoader {
 			if (!hasDependency(this.loadedModules, annotation.value()))
 				return false;
 		}
-		final IManager manager = new ScreenManager(this.loadingScreen, module);
-		final boolean enabled = module.getModule().enable(manager);
+		final boolean enabled = module.enable();
 		if (enabled) {
 			this.dispatcher.register(module);
 			if (!this.loadedModules.contains(module))

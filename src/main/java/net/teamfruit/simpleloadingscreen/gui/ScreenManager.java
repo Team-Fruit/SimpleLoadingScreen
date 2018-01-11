@@ -1,22 +1,29 @@
 package net.teamfruit.simpleloadingscreen.gui;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.Lists;
 
 import net.teamfruit.simpleloadingscreen.api.Area;
 import net.teamfruit.simpleloadingscreen.api.IBlackboard;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
 import net.teamfruit.simpleloadingscreen.api.IConfig;
+import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.IModule;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
+import net.teamfruit.simpleloadingscreen.resources.AreaConfigMapper;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
 public class ScreenManager implements IManager {
 	private final LoadingScreen loadingScreen;
 	private final ModuleContainer module;
+	private final List<IComponent> components = Lists.newArrayList();
+	private final List<IConfigMapper> mappers = Lists.newArrayList(AreaConfigMapper.instance);
 
 	public ScreenManager(final LoadingScreen loadingScreen, final ModuleContainer module) {
 		this.loadingScreen = loadingScreen;
@@ -34,7 +41,7 @@ public class ScreenManager implements IManager {
 	}
 
 	@Override
-	public IComponent getComponent(String sourceId, final String id) {
+	public IComponent createComponent(String sourceId, final String id) {
 		for (final ScreenComponent component : this.loadingScreen.components)
 			if (StringUtils.equalsIgnoreCase(this.module.getModule().getID(), component.getModule().getID())&&StringUtils.equalsIgnoreCase(id, component.getID()))
 				throw new IllegalArgumentException("id '+id+' has been already created by this module.");
@@ -57,8 +64,8 @@ public class ScreenManager implements IManager {
 	}
 
 	@Override
-	public void registerComponent(final IComponent component) {
-		this.module.registerComponent(component);
+	public List<IComponent> getRenderingComponents() {
+		return this.components;
 	}
 
 	@Override
@@ -88,13 +95,24 @@ public class ScreenManager implements IManager {
 		return workspace;
 	}
 
+	private IConfig config;
+
 	@Override
-	public IConfig getConfig(final File configFile) {
-		return config(new File(getWorkspace(), "config.properties"));
+	public IConfig getConfig() {
+		if (this.config==null)
+			this.config = loadConfig(new File(getWorkspace(), "config.properties"));
+		return this.config;
 	}
 
 	@Override
-	public IConfig config(final File configFile) {
-		return new ScreenConfig(configFile);
+	public IConfig loadConfig(final File configFile) {
+		final ScreenConfig config = new ScreenConfig(configFile);
+		config.load();
+		return config;
+	}
+
+	@Override
+	public List<IConfigMapper> getConfigMappers() {
+		return this.mappers;
 	}
 }

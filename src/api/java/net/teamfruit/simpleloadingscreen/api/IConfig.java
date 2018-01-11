@@ -2,6 +2,7 @@ package net.teamfruit.simpleloadingscreen.api;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.Set;
 
 public interface IConfig {
 
@@ -17,12 +18,12 @@ public interface IConfig {
 
 	File getLocation();
 
-	void setEnableChangeToSave(final boolean enable);
-
 	void fillDefaults();
 
 	void save();
 
 	void load();
+
+	Set<IConfigProperty<?>> getConfigs();
 
 }

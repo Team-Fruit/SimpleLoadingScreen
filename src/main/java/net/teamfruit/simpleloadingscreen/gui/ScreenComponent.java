@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 
 import net.teamfruit.simpleloadingscreen.api.IComponent;
 import net.teamfruit.simpleloadingscreen.api.IConfig;
+import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
 import net.teamfruit.simpleloadingscreen.api.IModule;
 import net.teamfruit.simpleloadingscreen.api.IRenderer;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
@@ -18,17 +19,20 @@ public class ScreenComponent implements IComponent {
 	private final String id;
 	private final ModuleContainer module;
 	private final ModuleContainer authormodule;
-	private final List<IRenderer> renderers = Lists.newArrayList();
+	private final List<IRenderer> renderers;
+	private final List<IConfigMapper> mappers;
 
-	private ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module, final ModuleContainer authormodule) {
+	private ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module, final ModuleContainer authormodule, final List<IRenderer> renderers, final List<IConfigMapper> mappers) {
 		this.loadingScreen = loadingScreen;
 		this.id = id;
 		this.module = module;
 		this.authormodule = authormodule;
+		this.renderers = renderers;
+		this.mappers = mappers;
 	}
 
 	public ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module) {
-		this(loadingScreen, id, module, module);
+		this(loadingScreen, id, module, module, Lists.newArrayList(), Lists.newArrayList());
 	}
 
 	@Override
@@ -54,14 +58,20 @@ public class ScreenComponent implements IComponent {
 		return componentWorkspace;
 	}
 
+	private IConfig config;
+
 	@Override
-	public IConfig getConfig(final File configFile) {
-		return config(new File(getWorkspace(), "config.properties"));
+	public IConfig getConfig() {
+		if (this.config==null)
+			this.config = loadConfig(new File(getWorkspace(), "config.properties"));
+		return this.config;
 	}
 
 	@Override
-	public IConfig config(final File configFile) {
-		return new ScreenConfig(configFile);
+	public IConfig loadConfig(final File configFile) {
+		final ScreenConfig config = new ScreenConfig(configFile);
+		config.load();
+		return config;
 	}
 
 	@Override
@@ -75,17 +85,17 @@ public class ScreenComponent implements IComponent {
 	}
 
 	@Override
-	public void registerRenderer(final IRenderer renderer) {
-		this.renderers.add(renderer);
-	}
-
-	@Override
 	public List<IRenderer> getRenderers() {
 		return this.renderers;
 	}
 
+	@Override
+	public List<IConfigMapper> getConfigMappers() {
+		return this.mappers;
+	}
+
 	public ScreenComponent copy(final String newid, final ModuleContainer newmodule) {
-		final ScreenComponent component = new ScreenComponent(this.loadingScreen, newid, newmodule, this.authormodule);
+		final ScreenComponent component = new ScreenComponent(this.loadingScreen, newid, newmodule, this.authormodule, Lists.newArrayList(this.renderers), Lists.newArrayList(this.mappers));
 		ScreenBlackboard.copy(getBlackboard(), component.getBlackboard());
 		return component;
 	}

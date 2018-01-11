@@ -1,11 +1,12 @@
 package net.teamfruit.simpleloadingscreen.api;
 
 import java.io.File;
+import java.util.List;
 
 public interface IManager {
 	IComponent createComponent(String id);
 
-	IComponent getComponent(String sourceId, String id);
+	IComponent createComponent(String sourceId, String id);
 
 	IModule getModule(String id);
 
@@ -13,13 +14,16 @@ public interface IManager {
 
 	IBlackboard getGlobalBlackboard();
 
-	void registerComponent(IComponent component);
-
-	IConfig config(File configFile);
+	IConfig loadConfig(File configFile);
 
 	File getWorkspace();
 
-	IConfig getConfig(File configFile);
+	IConfig getConfig();
 
 	void setArea(Area area);
+
+	List<IComponent> getRenderingComponents();
+
+	List<IConfigMapper> getConfigMappers();
+
 }
