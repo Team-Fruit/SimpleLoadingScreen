@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.logging.log4j.Level;
 
@@ -110,26 +112,30 @@ public class ScreenConfig implements IConfig {
 	}
 
 	@Override
-	public IConfigProperty<Boolean> booleanProperty(final String name, final boolean def) {
+	public IConfigProperty<Boolean> booleanProperty(final String name, final Boolean def) {
 		@SuppressWarnings("unchecked")
 		ConfigProperty<Boolean> property = (ConfigProperty<Boolean>) this.configPropertiesTable.get(name, Boolean.class);
 		if (property==null)
 			property = register(new ConfigProperty<Boolean>(this, name, def, Boolean.class) {
 				@Override
 				public Boolean get() {
-					return BooleanUtils.toBooleanDefaultIfNull(BooleanUtils.toBooleanObject(getProperty(Boolean.toString(this.def))), this.def);
+					final Boolean def = this.def;
+					if (def!=null)
+						return BooleanUtils.toBooleanDefaultIfNull(BooleanUtils.toBooleanObject(getProperty(Boolean.toString(def))), def);
+					else
+						return BooleanUtils.toBooleanObject(getProperty(null));
 				}
 
 				@Override
 				public void set(final Boolean value) {
-					setProperty(Boolean.toString(value));
+					setProperty(value!=null ? Boolean.toString(value) : null);
 				}
 			});
 		return property;
 	}
 
 	@Override
-	public IConfigProperty<Integer> intProperty(final String name, final int def) {
+	public IConfigProperty<Integer> intProperty(final String name, final Integer def) {
 		@SuppressWarnings("unchecked")
 		ConfigProperty<Integer> property = (ConfigProperty<Integer>) this.configPropertiesTable.get(name, Integer.class);
 		if (property==null)
@@ -137,22 +143,29 @@ public class ScreenConfig implements IConfig {
 				@Override
 				public Integer get() {
 					try {
-						return Integer.decode(getProperty(Integer.toString(this.def)));
+						final Integer def = this.def;
+						if (def!=null)
+							return Integer.decode(getProperty(Integer.toString(def)));
+						else {
+							final String property = getProperty(null);
+							if (property!=null)
+								return Integer.decode(property);
+						}
 					} catch (final NumberFormatException nfe) {
-						return this.def;
 					}
+					return this.def;
 				}
 
 				@Override
 				public void set(final Integer value) {
-					setProperty(Integer.toString(value));
+					setProperty(value!=null ? Integer.toString(value) : null);
 				}
 			});
 		return property;
 	}
 
 	@Override
-	public IConfigProperty<Integer> hexProperty(final String name, final int def) {
+	public IConfigProperty<Integer> hexProperty(final String name, final Integer def) {
 		@SuppressWarnings("unchecked")
 		ConfigProperty<Integer> property = (ConfigProperty<Integer>) this.configPropertiesTable.get(name, Integer.class);
 		if (property==null)
@@ -160,15 +173,22 @@ public class ScreenConfig implements IConfig {
 				@Override
 				public Integer get() {
 					try {
-						return Integer.decode(getProperty("0x"+Integer.toString(this.def, 16).toUpperCase()));
+						final Integer def = this.def;
+						if (def!=null)
+							return Integer.decode(getProperty("0x"+Integer.toString(def, 16).toUpperCase()));
+						else {
+							final String property = getProperty(null);
+							if (property!=null)
+								return Integer.decode(property);
+						}
 					} catch (final NumberFormatException nfe) {
-						return this.def;
 					}
+					return this.def;
 				}
 
 				@Override
 				public void set(final Integer value) {
-					setProperty("0x"+Integer.toString(value, 16).toUpperCase());
+					setProperty(value!=null ? "0x"+Integer.toString(value, 16).toUpperCase() : null);
 				}
 			});
 		return property;
@@ -177,7 +197,7 @@ public class ScreenConfig implements IConfig {
 	public static abstract class ConfigProperty<T> implements IConfigProperty<T> {
 		protected final ScreenConfig config;
 		protected final String name;
-		protected final T def;
+		protected final @Nullable T def;
 		protected final Class<T> type;
 
 		public ConfigProperty(final ScreenConfig config, final String name, final T def, final Class<T> type) {
@@ -187,12 +207,15 @@ public class ScreenConfig implements IConfig {
 			this.type = type;
 		}
 
-		protected String getProperty(final String def) {
+		protected @Nullable String getProperty(final String def) {
 			return this.config.properties.getProperty(this.name, def);
 		}
 
-		protected void setProperty(final String value) {
-			this.config.properties.setProperty(this.name, value);
+		protected void setProperty(@Nullable final String value) {
+			if (value!=null)
+				this.config.properties.setProperty(this.name, value);
+			else
+				this.config.properties.remove(this.name);
 			this.config.onChanged();
 		}
 
@@ -202,7 +225,7 @@ public class ScreenConfig implements IConfig {
 		}
 
 		@Override
-		public T getDefault() {
+		public @Nullable T getDefault() {
 			return this.def;
 		}
 
@@ -217,9 +240,9 @@ public class ScreenConfig implements IConfig {
 		}
 
 		@Override
-		public abstract T get();
+		public abstract @Nullable T get();
 
 		@Override
-		public abstract void set(T value);
+		public abstract void set(@Nullable T value);
 	}
 }
