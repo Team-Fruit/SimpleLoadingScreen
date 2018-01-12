@@ -2,7 +2,7 @@ package net.teamfruit.simpleloadingscreen.util;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import net.teamfruit.simpleloadingscreen.api.Area;
+import net.teamfruit.simpleloadingscreen.api.position.Area;
 
 public class RendererUtils {
 	/**

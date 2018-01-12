@@ -3,6 +3,8 @@ package net.teamfruit.simpleloadingscreen.api;
 import java.io.File;
 import java.util.List;
 
+import net.teamfruit.simpleloadingscreen.api.position.Area;
+
 public interface IManager {
 	IComponent createComponent(String id);
 

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import net.teamfruit.simpleloadingscreen.api.position.Area;
+import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
+
 public interface IScreen {
 	int getWidth();
 
@@ -25,5 +28,7 @@ public interface IScreen {
 
 	IComponent getComponent();
 
-	Area getArea();
+	Area getDisplayArea();
+
+	RelativeArea getArea();
 }

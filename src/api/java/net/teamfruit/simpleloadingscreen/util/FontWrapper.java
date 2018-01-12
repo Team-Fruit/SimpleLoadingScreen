@@ -6,8 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import net.teamfruit.simpleloadingscreen.api.Area;
 import net.teamfruit.simpleloadingscreen.api.IFontRenderer;
+import net.teamfruit.simpleloadingscreen.api.position.Area;
 
 /**
  * <p>Some font utils from BnnWidget

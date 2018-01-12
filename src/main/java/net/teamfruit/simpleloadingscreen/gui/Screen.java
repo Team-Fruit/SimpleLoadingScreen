@@ -7,7 +7,6 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import net.teamfruit.simpleloadingscreen.api.Area;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
 import net.teamfruit.simpleloadingscreen.api.IFontRenderer;
 import net.teamfruit.simpleloadingscreen.api.IForgeSplashProperties;
@@ -15,6 +14,8 @@ import net.teamfruit.simpleloadingscreen.api.IProgressBar;
 import net.teamfruit.simpleloadingscreen.api.IResourceLocation;
 import net.teamfruit.simpleloadingscreen.api.IScreen;
 import net.teamfruit.simpleloadingscreen.api.ITexture;
+import net.teamfruit.simpleloadingscreen.api.position.Area;
+import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.resources.ScreenResourceLocation;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
@@ -50,11 +51,16 @@ public class Screen implements IScreen {
 	}
 
 	@Override
-	public Area getArea() {
+	public Area getDisplayArea() {
+		return Area.size(0, 0, this.width, this.height);
+	}
+
+	@Override
+	public RelativeArea getArea() {
 		final Object obj = getComponent().getBlackboard().getValue("area");
-		if (obj instanceof Area)
-			return (Area) obj;
-		return Area.abs(0, 0, getWidth(), getHeight());
+		if (obj instanceof RelativeArea)
+			return (RelativeArea) obj;
+		return new RelativeArea();
 	}
 
 	@Override

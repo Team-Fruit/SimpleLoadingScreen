@@ -1,4 +1,4 @@
-package net.teamfruit.simpleloadingscreen.api;
+package net.teamfruit.simpleloadingscreen.api.position;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
