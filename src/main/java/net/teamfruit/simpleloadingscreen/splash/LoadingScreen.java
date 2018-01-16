@@ -26,6 +26,7 @@ import net.teamfruit.simpleloadingscreen.progress.ScreenProgressManager;
 import net.teamfruit.simpleloadingscreen.resources.ResourceLoader;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
 import net.teamfruit.simpleloadingscreen.style.StyleLoader;
+import net.teamfruit.simpleloadingscreen.style.StyleManager;
 
 @SuppressWarnings("deprecation")
 public class LoadingScreen {
@@ -98,6 +99,8 @@ public class LoadingScreen {
 
 		for (final FileResourcePack resource : this.moduleLoader.getModuleResources())
 			this.resourceLoader.addResourcePack(resource);
+
+		new StyleManager(this).load();
 
 		this.renderer = new LoadingScreenRenderer(this);
 	}

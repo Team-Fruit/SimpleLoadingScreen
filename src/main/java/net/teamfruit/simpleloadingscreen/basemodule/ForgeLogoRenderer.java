@@ -1,4 +1,4 @@
-package net.teamfruit.simpleloadingscreen.component;
+package net.teamfruit.simpleloadingscreen.basemodule;
 
 import static org.lwjgl.opengl.GL11.*;
 

@@ -60,6 +60,7 @@ public class ModuleLoader {
 		this.loadingScreen = loadingScreen;
 		this.moduleClassLoader = new ModuleClassLoader(getClass().getClassLoader());
 		this.dispatcher = loadingScreen.moduleDispatcher;
+		this.modules.add(BaseModule.class);
 
 		if (modulesDir.exists()) {
 			if (!modulesDir.isDirectory())
@@ -72,8 +73,6 @@ public class ModuleLoader {
 			Log.log.info("Attempting to load {} external module(s)...", files.length);
 			loadExternalModules(new ArrayList<>(Arrays.asList(files)));
 		}
-
-		this.modules.add(BaseModule.class);
 
 		for (final Class<? extends IModule> clazz : this.modules)
 			try {
