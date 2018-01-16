@@ -18,11 +18,13 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.filefilter.FileFilterUtils;
 
+import net.minecraft.client.resources.FileResourcePack;
 import net.teamfruit.simpleloadingscreen.Log;
 import net.teamfruit.simpleloadingscreen.Reference;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.IModule;
 import net.teamfruit.simpleloadingscreen.api.Requires;
+import net.teamfruit.simpleloadingscreen.basemodule.BaseModule;
 import net.teamfruit.simpleloadingscreen.gui.ScreenManager;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
@@ -41,6 +43,10 @@ public class ModuleLoader {
 	 * The client which owns the module loader.
 	 */
 	private final ModuleDispatcher dispatcher;
+	/**
+	 * The module resources loaded by the loader.
+	 */
+	private final List<FileResourcePack> moduleResources = new CopyOnWriteArrayList<>();
 	/**
 	 * The modules loaded by the loader.
 	 */
@@ -66,6 +72,8 @@ public class ModuleLoader {
 			Log.log.info("Attempting to load {} external module(s)...", files.length);
 			loadExternalModules(new ArrayList<>(Arrays.asList(files)));
 		}
+
+		this.modules.add(BaseModule.class);
 
 		for (final Class<? extends IModule> clazz : this.modules)
 			try {
@@ -103,6 +111,10 @@ public class ModuleLoader {
 	 */
 	public List<Class<? extends IModule>> getModules() {
 		return this.modules;
+	}
+
+	public List<FileResourcePack> getModuleResources() {
+		return this.moduleResources;
 	}
 
 	/**
@@ -245,6 +257,7 @@ public class ModuleLoader {
 						if (IModule.class.isAssignableFrom(classInstance))
 							addModuleClass((Class<? extends IModule>) classInstance);
 					}
+				this.moduleResources.add(new FileResourcePack(file));
 			} catch (IOException|ClassNotFoundException e) {
 				Log.log.error("Unable to load module "+file.getName()+"!", e);
 			}

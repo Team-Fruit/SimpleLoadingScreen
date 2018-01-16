@@ -12,10 +12,6 @@ public interface IComponent {
 
 	List<IRenderer> getRenderers();
 
-	IConfig getConfig();
-
-	IConfig loadConfig(File configFile);
-
 	IModule getAuthorModule();
 
 	IBlackboard getBlackboard();

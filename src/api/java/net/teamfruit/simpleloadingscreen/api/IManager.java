@@ -3,7 +3,7 @@ package net.teamfruit.simpleloadingscreen.api;
 import java.io.File;
 import java.util.List;
 
-import net.teamfruit.simpleloadingscreen.api.position.Area;
+import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 
 public interface IManager {
 	IComponent createComponent(String id);
@@ -22,7 +22,7 @@ public interface IManager {
 
 	IConfig getConfig();
 
-	void setArea(Area area);
+	void setArea(RelativeArea area);
 
 	List<IComponent> getRenderingComponents();
 

@@ -8,10 +8,6 @@ import net.teamfruit.simpleloadingscreen.api.position.Area;
 import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 
 public interface IScreen {
-	int getWidth();
-
-	int getHeight();
-
 	IResourceLocation location(String domain, String path);
 
 	IResourceLocation location(String domainpath);
@@ -30,5 +26,7 @@ public interface IScreen {
 
 	Area getDisplayArea();
 
-	RelativeArea getArea();
+	RelativeArea getRelativeArea();
+
+	Area getArea();
 }

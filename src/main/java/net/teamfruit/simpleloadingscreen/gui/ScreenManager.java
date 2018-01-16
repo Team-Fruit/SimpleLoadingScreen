@@ -13,7 +13,7 @@ import net.teamfruit.simpleloadingscreen.api.IConfig;
 import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.IModule;
-import net.teamfruit.simpleloadingscreen.api.position.Area;
+import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
 import net.teamfruit.simpleloadingscreen.resources.AreaConfigMapper;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
@@ -28,6 +28,10 @@ public class ScreenManager implements IManager {
 	public ScreenManager(final LoadingScreen loadingScreen, final ModuleContainer module) {
 		this.loadingScreen = loadingScreen;
 		this.module = module;
+	}
+
+	public LoadingScreen getLoadingScreen() {
+		return this.loadingScreen;
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class ScreenManager implements IManager {
 	}
 
 	@Override
-	public void setArea(final Area area) {
+	public void setArea(final RelativeArea area) {
 		getBlackboard().setValue("area", area);
 	}
 

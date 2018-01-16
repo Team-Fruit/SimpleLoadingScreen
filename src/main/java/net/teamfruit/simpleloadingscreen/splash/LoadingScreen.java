@@ -14,6 +14,7 @@ import cpw.mods.fml.client.SplashProgress;
 import cpw.mods.fml.common.asm.FMLSanityChecker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.FileResourcePack;
 import net.teamfruit.simpleloadingscreen.Log;
 import net.teamfruit.simpleloadingscreen.api.IForgeSplashProperties;
 import net.teamfruit.simpleloadingscreen.gui.ScreenBlackboard;
@@ -24,6 +25,7 @@ import net.teamfruit.simpleloadingscreen.modules.ModuleLoader;
 import net.teamfruit.simpleloadingscreen.progress.ScreenProgressManager;
 import net.teamfruit.simpleloadingscreen.resources.ResourceLoader;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
+import net.teamfruit.simpleloadingscreen.style.StyleLoader;
 
 @SuppressWarnings("deprecation")
 public class LoadingScreen {
@@ -39,6 +41,7 @@ public class LoadingScreen {
 	public final File loadingScreenModuleConfigDir;
 	public final ModuleDispatcher moduleDispatcher;
 	public final ResourceLoader resourceLoader;
+	public final StyleLoader styleLoader;
 	public final ModuleLoader moduleLoader;
 	public final LoadingScreenRenderer renderer;
 
@@ -88,8 +91,14 @@ public class LoadingScreen {
 			this.resourceLoader.addAssetsLocation(resourceDir);
 		}
 
+		this.styleLoader = new StyleLoader(this, new File(this.loadingScreenDir, "themes"));
+
 		this.moduleDispatcher = new ModuleDispatcher(this);
 		this.moduleLoader = new ModuleLoader(this, new File(this.loadingScreenDir, "modules"));
+
+		for (final FileResourcePack resource : this.moduleLoader.getModuleResources())
+			this.resourceLoader.addResourcePack(resource);
+
 		this.renderer = new LoadingScreenRenderer(this);
 	}
 }

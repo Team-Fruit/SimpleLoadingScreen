@@ -36,16 +36,6 @@ public class Screen implements IScreen {
 	}
 
 	@Override
-	public int getWidth() {
-		return this.width;
-	}
-
-	@Override
-	public int getHeight() {
-		return this.height;
-	}
-
-	@Override
 	public IFontRenderer getFontRenderer() {
 		return this.fontRenderer;
 	}
@@ -56,11 +46,16 @@ public class Screen implements IScreen {
 	}
 
 	@Override
-	public RelativeArea getArea() {
+	public RelativeArea getRelativeArea() {
 		final Object obj = getComponent().getBlackboard().getValue("area");
 		if (obj instanceof RelativeArea)
 			return (RelativeArea) obj;
 		return new RelativeArea();
+	}
+
+	@Override
+	public Area getArea() {
+		return getRelativeArea().getAbsolute(getDisplayArea());
 	}
 
 	@Override

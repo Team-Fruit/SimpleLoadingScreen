@@ -6,12 +6,10 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.teamfruit.simpleloadingscreen.api.IComponent;
-import net.teamfruit.simpleloadingscreen.api.IConfig;
 import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
 import net.teamfruit.simpleloadingscreen.api.IModule;
 import net.teamfruit.simpleloadingscreen.api.IRenderer;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
-import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
 public class ScreenComponent implements IComponent {
@@ -56,22 +54,6 @@ public class ScreenComponent implements IComponent {
 		final File componentWorkspace = new File(workspace, getID());
 		componentWorkspace.mkdirs();
 		return componentWorkspace;
-	}
-
-	private IConfig config;
-
-	@Override
-	public IConfig getConfig() {
-		if (this.config==null)
-			this.config = loadConfig(new File(getWorkspace(), "config.properties"));
-		return this.config;
-	}
-
-	@Override
-	public IConfig loadConfig(final File configFile) {
-		final ScreenConfig config = new ScreenConfig(configFile);
-		config.load();
-		return config;
 	}
 
 	@Override
