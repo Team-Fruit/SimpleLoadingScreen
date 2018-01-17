@@ -25,7 +25,4 @@ public interface IManager {
 	void setArea(RelativeArea area);
 
 	List<IComponent> getRenderingComponents();
-
-	List<IConfigMapper> getConfigMappers();
-
 }

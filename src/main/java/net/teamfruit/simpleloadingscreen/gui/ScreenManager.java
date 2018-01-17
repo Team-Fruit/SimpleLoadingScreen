@@ -10,12 +10,10 @@ import com.google.common.collect.Lists;
 import net.teamfruit.simpleloadingscreen.api.IBlackboard;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
 import net.teamfruit.simpleloadingscreen.api.IConfig;
-import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.IModule;
 import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
-import net.teamfruit.simpleloadingscreen.resources.AreaConfigMapper;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
@@ -23,7 +21,6 @@ public class ScreenManager implements IManager {
 	private final LoadingScreen loadingScreen;
 	private final ModuleContainer module;
 	private final List<IComponent> components = Lists.newArrayList();
-	private final List<IConfigMapper> mappers = Lists.newArrayList(AreaConfigMapper.instance);
 
 	public ScreenManager(final LoadingScreen loadingScreen, final ModuleContainer module) {
 		this.loadingScreen = loadingScreen;
@@ -113,10 +110,5 @@ public class ScreenManager implements IManager {
 		final ScreenConfig config = new ScreenConfig(configFile);
 		config.load();
 		return config;
-	}
-
-	@Override
-	public List<IConfigMapper> getConfigMappers() {
-		return this.mappers;
 	}
 }

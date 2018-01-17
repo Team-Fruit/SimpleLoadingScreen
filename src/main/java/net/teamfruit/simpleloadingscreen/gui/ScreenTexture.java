@@ -19,7 +19,7 @@ import cpw.mods.fml.client.SplashProgress;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 import net.teamfruit.simpleloadingscreen.Log;
-import net.teamfruit.simpleloadingscreen.api.ITexture;
+import net.teamfruit.simpleloadingscreen.api.renderer.ITexture;
 import net.teamfruit.simpleloadingscreen.resources.ResourceLoader;
 
 @SuppressWarnings("deprecation")

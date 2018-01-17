@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import net.teamfruit.simpleloadingscreen.api.IBlackboard;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
+import net.teamfruit.simpleloadingscreen.api.IPropertyMapper;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.basemodule.BaseModule;
@@ -54,6 +55,8 @@ public class StyleManager {
 			cblackboard.setValue(entry.getKey(), entry.getValue());
 		for (final Entry<String, Object> entry : model.getBlackboard().entrySet())
 			cblackboard.setValue(entry.getKey(), entry.getValue());
+		for (final IPropertyMapper mapper : component.getPropertyMappers())
+			mapper.map(model.getProperty(), cblackboard);
 
 		manager.getRenderingComponents().add(component);
 	}

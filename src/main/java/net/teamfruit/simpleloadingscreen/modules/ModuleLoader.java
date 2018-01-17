@@ -131,7 +131,7 @@ public class ModuleLoader {
 			if (!hasDependency(this.loadedModules, annotation.value()))
 				return false;
 		}
-		final boolean enabled = module.enable();
+		final boolean enabled = module.getModule().enable(module.getManager());
 		if (enabled) {
 			this.dispatcher.register(module);
 			if (!this.loadedModules.contains(module))

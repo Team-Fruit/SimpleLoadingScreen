@@ -4,12 +4,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.Iterator;
 
-import net.teamfruit.simpleloadingscreen.api.IFontRenderer;
 import net.teamfruit.simpleloadingscreen.api.IForgeSplashProperties;
 import net.teamfruit.simpleloadingscreen.api.IProgressBar;
-import net.teamfruit.simpleloadingscreen.api.IRenderer;
-import net.teamfruit.simpleloadingscreen.api.IScreen;
 import net.teamfruit.simpleloadingscreen.api.position.Area;
+import net.teamfruit.simpleloadingscreen.api.renderer.IFontRenderer;
+import net.teamfruit.simpleloadingscreen.api.renderer.IRenderer;
+import net.teamfruit.simpleloadingscreen.api.renderer.IScreen;
 import net.teamfruit.simpleloadingscreen.util.ColorUtils;
 import net.teamfruit.simpleloadingscreen.util.RendererUtils;
 

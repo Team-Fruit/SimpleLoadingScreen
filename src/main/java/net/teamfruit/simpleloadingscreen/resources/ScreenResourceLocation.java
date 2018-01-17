@@ -1,7 +1,7 @@
 package net.teamfruit.simpleloadingscreen.resources;
 
 import net.minecraft.util.ResourceLocation;
-import net.teamfruit.simpleloadingscreen.api.IResourceLocation;
+import net.teamfruit.simpleloadingscreen.api.renderer.IResourceLocation;
 
 public class ScreenResourceLocation implements IResourceLocation {
 	private final ResourceLocation resourceLocation;

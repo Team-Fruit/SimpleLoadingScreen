@@ -7,8 +7,8 @@ import com.google.common.collect.Lists;
 
 import net.teamfruit.simpleloadingscreen.Log;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
-import net.teamfruit.simpleloadingscreen.api.IRenderer;
-import net.teamfruit.simpleloadingscreen.api.IScreen;
+import net.teamfruit.simpleloadingscreen.api.renderer.IRenderer;
+import net.teamfruit.simpleloadingscreen.api.renderer.IScreen;
 import net.teamfruit.simpleloadingscreen.gui.Screen;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 

@@ -3,6 +3,8 @@ package net.teamfruit.simpleloadingscreen.api;
 import java.io.File;
 import java.util.List;
 
+import net.teamfruit.simpleloadingscreen.api.renderer.IRenderer;
+
 public interface IComponent {
 	String getID();
 
@@ -18,5 +20,5 @@ public interface IComponent {
 
 	IBlackboard getGlobalBlackboard();
 
-	List<IConfigMapper> getConfigMappers();
+	List<IPropertyMapper> getPropertyMappers();
 }

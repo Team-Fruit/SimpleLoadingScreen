@@ -7,19 +7,16 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import net.teamfruit.simpleloadingscreen.api.IBlackboard;
-import net.teamfruit.simpleloadingscreen.api.IConfig;
-import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
+import net.teamfruit.simpleloadingscreen.api.IPropertyMapper;
 import net.teamfruit.simpleloadingscreen.api.position.Coord;
 import net.teamfruit.simpleloadingscreen.api.position.Coord.CoordSide;
 import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.api.property.GuiProperties;
 import net.teamfruit.simpleloadingscreen.api.property.IGuiProperty;
 
-public class AreaConfigMapper implements IConfigMapper {
+public class AreaConfigMapper implements IPropertyMapper {
 
 	public static final AreaConfigMapper instance = new AreaConfigMapper();
 
@@ -27,16 +24,8 @@ public class AreaConfigMapper implements IConfigMapper {
 	}
 
 	@Override
-	public void map(final IConfig source, final IBlackboard dest) {
-		final List<Coord> coords = Lists.newArrayList();
-		coords.add(getCoord(CoordSide.Left, source.stringProperty("left", null).get()));
-		coords.add(getCoord(CoordSide.Right, source.stringProperty("right", null).get()));
-		coords.add(getCoord(CoordSide.Top, source.stringProperty("top", null).get()));
-		coords.add(getCoord(CoordSide.Bottom, source.stringProperty("bottom", null).get()));
-		coords.add(getCoord(CoordSide.Width, source.stringProperty("width", null).get()));
-		coords.add(getCoord(CoordSide.Height, source.stringProperty("height", null).get()));
-		coords.removeAll(Collections.singleton(null));
-		final RelativeArea area = new RelativeArea(coords.toArray(new Coord[coords.size()]));
+	public void map(final Map<String, String> source, final IBlackboard dest) {
+		final RelativeArea area = createArea(source);
 		dest.setValue("area", area);
 	}
 
@@ -50,24 +39,6 @@ public class AreaConfigMapper implements IConfigMapper {
 		coords.add(getCoord(CoordSide.Height, source.get("height")));
 		coords.removeAll(Collections.singleton(null));
 		return new RelativeArea(coords.toArray(new Coord[coords.size()]));
-	}
-
-	public RelativeArea createArea(final JsonObject source) {
-		final List<Coord> coords = Lists.newArrayList();
-		coords.add(getCoord(CoordSide.Left, source.get("left")));
-		coords.add(getCoord(CoordSide.Right, source.get("right")));
-		coords.add(getCoord(CoordSide.Top, source.get("top")));
-		coords.add(getCoord(CoordSide.Bottom, source.get("bottom")));
-		coords.add(getCoord(CoordSide.Width, source.get("width")));
-		coords.add(getCoord(CoordSide.Height, source.get("height")));
-		coords.removeAll(Collections.singleton(null));
-		return new RelativeArea(coords.toArray(new Coord[coords.size()]));
-	}
-
-	private Coord getCoord(final CoordSide side, final JsonElement value) {
-		if (value!=null&&value.isJsonPrimitive())
-			return getCoord(side, value.getAsString());
-		return null;
 	}
 
 	private Coord getCoord(final CoordSide side, final String value) {

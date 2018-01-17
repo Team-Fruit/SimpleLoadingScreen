@@ -1,4 +1,4 @@
-package net.teamfruit.simpleloadingscreen.api;
+package net.teamfruit.simpleloadingscreen.api.renderer;
 
 public interface IRenderer {
 	/**

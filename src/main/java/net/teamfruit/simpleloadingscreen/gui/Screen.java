@@ -8,14 +8,14 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
-import net.teamfruit.simpleloadingscreen.api.IFontRenderer;
 import net.teamfruit.simpleloadingscreen.api.IForgeSplashProperties;
 import net.teamfruit.simpleloadingscreen.api.IProgressBar;
-import net.teamfruit.simpleloadingscreen.api.IResourceLocation;
-import net.teamfruit.simpleloadingscreen.api.IScreen;
-import net.teamfruit.simpleloadingscreen.api.ITexture;
 import net.teamfruit.simpleloadingscreen.api.position.Area;
 import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
+import net.teamfruit.simpleloadingscreen.api.renderer.IFontRenderer;
+import net.teamfruit.simpleloadingscreen.api.renderer.IResourceLocation;
+import net.teamfruit.simpleloadingscreen.api.renderer.IScreen;
+import net.teamfruit.simpleloadingscreen.api.renderer.ITexture;
 import net.teamfruit.simpleloadingscreen.resources.ScreenResourceLocation;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 

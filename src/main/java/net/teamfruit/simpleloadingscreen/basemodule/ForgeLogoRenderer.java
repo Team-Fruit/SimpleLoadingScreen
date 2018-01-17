@@ -3,10 +3,10 @@ package net.teamfruit.simpleloadingscreen.basemodule;
 import static org.lwjgl.opengl.GL11.*;
 
 import net.teamfruit.simpleloadingscreen.api.IForgeSplashProperties;
-import net.teamfruit.simpleloadingscreen.api.IRenderer;
-import net.teamfruit.simpleloadingscreen.api.IScreen;
-import net.teamfruit.simpleloadingscreen.api.ITexture;
 import net.teamfruit.simpleloadingscreen.api.position.Area;
+import net.teamfruit.simpleloadingscreen.api.renderer.IRenderer;
+import net.teamfruit.simpleloadingscreen.api.renderer.IScreen;
+import net.teamfruit.simpleloadingscreen.api.renderer.ITexture;
 import net.teamfruit.simpleloadingscreen.util.ColorUtils;
 
 public class ForgeLogoRenderer implements IRenderer {

@@ -3,7 +3,7 @@ package net.teamfruit.simpleloadingscreen.gui;
 import java.util.List;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.teamfruit.simpleloadingscreen.api.IFontRenderer;
+import net.teamfruit.simpleloadingscreen.api.renderer.IFontRenderer;
 
 public class ScreenFontRenderer implements IFontRenderer {
 	private final FontRenderer fontRenderer;

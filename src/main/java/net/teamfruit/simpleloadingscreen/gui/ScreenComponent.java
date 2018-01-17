@@ -6,9 +6,9 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import net.teamfruit.simpleloadingscreen.api.IComponent;
-import net.teamfruit.simpleloadingscreen.api.IConfigMapper;
+import net.teamfruit.simpleloadingscreen.api.IPropertyMapper;
+import net.teamfruit.simpleloadingscreen.api.renderer.IRenderer;
 import net.teamfruit.simpleloadingscreen.api.IModule;
-import net.teamfruit.simpleloadingscreen.api.IRenderer;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
@@ -18,9 +18,9 @@ public class ScreenComponent implements IComponent {
 	private final ModuleContainer module;
 	private final ModuleContainer authormodule;
 	private final List<IRenderer> renderers;
-	private final List<IConfigMapper> mappers;
+	private final List<IPropertyMapper> mappers;
 
-	private ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module, final ModuleContainer authormodule, final List<IRenderer> renderers, final List<IConfigMapper> mappers) {
+	private ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module, final ModuleContainer authormodule, final List<IRenderer> renderers, final List<IPropertyMapper> mappers) {
 		this.loadingScreen = loadingScreen;
 		this.id = id;
 		this.module = module;
@@ -72,7 +72,7 @@ public class ScreenComponent implements IComponent {
 	}
 
 	@Override
-	public List<IConfigMapper> getConfigMappers() {
+	public List<IPropertyMapper> getPropertyMappers() {
 		return this.mappers;
 	}
 
