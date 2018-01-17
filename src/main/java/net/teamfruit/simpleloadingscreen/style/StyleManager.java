@@ -2,13 +2,11 @@ package net.teamfruit.simpleloadingscreen.style;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
-import net.teamfruit.simpleloadingscreen.api.IBlackboard;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
-import net.teamfruit.simpleloadingscreen.api.IPropertyMapper;
 import net.teamfruit.simpleloadingscreen.api.IManager;
+import net.teamfruit.simpleloadingscreen.api.IPropertyMapper;
 import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.basemodule.BaseModule;
 import net.teamfruit.simpleloadingscreen.resources.AreaConfigMapper;
@@ -50,11 +48,9 @@ public class StyleManager {
 			blackboard.put("component", component);
 		}
 		blackboard.put("area", area);
-		final IBlackboard cblackboard = component.getBlackboard();
-		for (final Entry<String, String> entry : model.getProperty().entrySet())
-			cblackboard.setValue(entry.getKey(), entry.getValue());
-		for (final Entry<String, Object> entry : model.getBlackboard().entrySet())
-			cblackboard.setValue(entry.getKey(), entry.getValue());
+		final Map<String, Object> cblackboard = component.getBlackboard();
+		cblackboard.putAll(model.getProperty());
+		cblackboard.putAll(model.getBlackboard());
 		for (final IPropertyMapper mapper : component.getPropertyMappers())
 			mapper.map(model.getProperty(), cblackboard);
 

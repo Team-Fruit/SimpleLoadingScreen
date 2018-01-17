@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import net.teamfruit.simpleloadingscreen.api.IBlackboard;
 import net.teamfruit.simpleloadingscreen.api.IPropertyMapper;
 import net.teamfruit.simpleloadingscreen.api.position.Coord;
 import net.teamfruit.simpleloadingscreen.api.position.Coord.CoordSide;
@@ -24,9 +23,9 @@ public class AreaConfigMapper implements IPropertyMapper {
 	}
 
 	@Override
-	public void map(final Map<String, String> source, final IBlackboard dest) {
+	public void map(final Map<String, String> source, final Map<String, Object> dest) {
 		final RelativeArea area = createArea(source);
-		dest.setValue("area", area);
+		dest.put("area", area);
 	}
 
 	public RelativeArea createArea(final Map<String, String> source) {

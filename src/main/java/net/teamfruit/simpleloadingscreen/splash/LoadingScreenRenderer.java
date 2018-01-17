@@ -32,7 +32,10 @@ public class LoadingScreenRenderer {
 						name
 				) -> {
 					glPushMatrix();
+					glDisable(GL_LIGHTING);
+					glEnable(GL_BLEND);
 					glEnable(GL_TEXTURE_2D);
+					glColor4f(1f, 1f, 1f, 1f);
 				}, (name) -> {
 					glDisable(GL_TEXTURE_2D);
 					glPopMatrix();

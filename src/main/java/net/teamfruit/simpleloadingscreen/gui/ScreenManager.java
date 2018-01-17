@@ -7,12 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.google.common.collect.Lists;
 
-import net.teamfruit.simpleloadingscreen.api.IBlackboard;
 import net.teamfruit.simpleloadingscreen.api.IComponent;
 import net.teamfruit.simpleloadingscreen.api.IConfig;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.IModule;
-import net.teamfruit.simpleloadingscreen.api.position.RelativeArea;
 import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
@@ -70,23 +68,8 @@ public class ScreenManager implements IManager {
 	}
 
 	@Override
-	public void setArea(final RelativeArea area) {
-		getBlackboard().setValue("area", area);
-	}
-
-	@Override
 	public IModule getModule(final String id) {
 		return this.module.getModule();
-	}
-
-	@Override
-	public IBlackboard getBlackboard() {
-		return new ScreenBlackboard(this.loadingScreen.blackboard, this.module.getModule().getID());
-	}
-
-	@Override
-	public IBlackboard getGlobalBlackboard() {
-		return this.loadingScreen.globalBlackboard;
 	}
 
 	@Override

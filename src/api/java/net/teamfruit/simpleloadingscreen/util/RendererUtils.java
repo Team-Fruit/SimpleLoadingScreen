@@ -174,4 +174,22 @@ public class RendererUtils {
 	public static void draw(final Area vertex) {
 		draw(vertex, GL_QUADS);
 	}
+
+	/**
+	 * 非テクスチャ要素を描画する前に呼び出します
+	 */
+	public static void startShape() {
+		glDisable(GL_LIGHTING);
+		glEnable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+	}
+
+	/**
+	 * テクスチャ要素を描画する前に呼び出します
+	 */
+	public static void startTexture() {
+		glDisable(GL_LIGHTING);
+		glEnable(GL_BLEND);
+		glEnable(GL_TEXTURE_2D);
+	}
 }
