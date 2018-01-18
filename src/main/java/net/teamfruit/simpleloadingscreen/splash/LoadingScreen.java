@@ -20,6 +20,7 @@ import net.teamfruit.simpleloadingscreen.gui.ScreenFontRenderer;
 import net.teamfruit.simpleloadingscreen.modules.ModuleDispatcher;
 import net.teamfruit.simpleloadingscreen.modules.ModuleLoader;
 import net.teamfruit.simpleloadingscreen.progress.ScreenProgressManager;
+import net.teamfruit.simpleloadingscreen.resources.DirectoryInitializer;
 import net.teamfruit.simpleloadingscreen.resources.ResourceLoader;
 import net.teamfruit.simpleloadingscreen.resources.ScreenConfig;
 import net.teamfruit.simpleloadingscreen.style.StyleLoader;
@@ -33,8 +34,7 @@ public class LoadingScreen {
 	public final IForgeSplashProperties config;
 	public final ScreenFontRenderer fontRenderer;
 	public final ScreenProgressManager progressManager;
-	public final File loadingScreenDir;
-	public final File loadingScreenModuleConfigDir;
+	public final DirectoryInitializer directories;
 	public final ModuleDispatcher moduleDispatcher;
 	public final ResourceLoader resourceLoader;
 	public final StyleLoader styleLoader;
@@ -69,10 +69,8 @@ public class LoadingScreen {
 		}
 
 		this.progressManager = new ScreenProgressManager();
-		this.loadingScreenDir = new File(mc.mcDataDir, "config/LoadingScreen");
-		this.loadingScreenDir.mkdirs();
-		this.loadingScreenModuleConfigDir = new File(this.loadingScreenDir, "config");
-		this.loadingScreenModuleConfigDir.mkdirs();
+		this.directories = new DirectoryInitializer(new File(mc.mcDataDir, "config/LoadingScreen"));
+		this.directories.init();
 
 		{
 			this.resourceLoader = new ResourceLoader();
@@ -80,15 +78,13 @@ public class LoadingScreen {
 			this.resourceLoader.addResourcePackLocation(FMLSanityChecker.fmlLocation);
 			this.resourceLoader.addResourcePackLocation(new File(mc.mcDataDir, this.config.getResourcePackPath().get()));
 			this.resourceLoader.addAssetsLocation(new File(mc.mcDataDir, "resources"));
-			final File resourceDir = new File(this.loadingScreenDir, "resources");
-			resourceDir.mkdirs();
-			this.resourceLoader.addAssetsLocation(resourceDir);
+			this.resourceLoader.addAssetsLocation(this.directories.resourceDir);
 		}
 
-		this.styleLoader = new StyleLoader(this, new File(this.loadingScreenDir, "themes"));
+		this.styleLoader = new StyleLoader(this, this.directories.themeDir);
 
 		this.moduleDispatcher = new ModuleDispatcher(this);
-		this.moduleLoader = new ModuleLoader(this, new File(this.loadingScreenDir, "modules"));
+		this.moduleLoader = new ModuleLoader(this, this.directories.moduleDir);
 
 		for (final FileResourcePack resource : this.moduleLoader.getModuleResources())
 			this.resourceLoader.addResourcePack(resource);

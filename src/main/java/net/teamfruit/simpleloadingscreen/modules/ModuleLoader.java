@@ -62,12 +62,6 @@ public class ModuleLoader {
 		this.dispatcher = loadingScreen.moduleDispatcher;
 		this.modules.add(BaseModule.class);
 
-		if (modulesDir.exists()) {
-			if (!modulesDir.isDirectory())
-				throw new RuntimeException(modulesDir.getName()+" isn't a directory!");
-		} else if (!modulesDir.mkdirs())
-			throw new RuntimeException("Error creating "+modulesDir.getName()+" directory");
-
 		final File[] files = modulesDir.listFiles((FilenameFilter) FileFilterUtils.suffixFileFilter("jar"));
 		if (files!=null&&files.length>0) {
 			Log.log.info("Attempting to load {} external module(s)...", files.length);

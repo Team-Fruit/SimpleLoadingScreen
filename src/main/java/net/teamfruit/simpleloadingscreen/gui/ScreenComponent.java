@@ -70,7 +70,7 @@ public class ScreenComponent implements IComponent {
 
 	@Override
 	public File getWorkspace() {
-		final File workspace = new File(this.loadingScreen.loadingScreenModuleConfigDir, this.module.getModule().getName());
+		final File workspace = new File(this.loadingScreen.directories.configDir, this.module.getModule().getName());
 		final File componentWorkspace = new File(workspace, getID());
 		componentWorkspace.mkdirs();
 		return componentWorkspace;

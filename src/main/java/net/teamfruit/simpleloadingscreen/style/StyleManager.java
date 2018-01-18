@@ -1,6 +1,5 @@
 package net.teamfruit.simpleloadingscreen.style;
 
-import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +22,7 @@ public class StyleManager {
 		this.loadingScreen.moduleLoader.getLoadedModules().stream().filter(module -> {
 			return module.getModule() instanceof BaseModule;
 		}).findFirst().ifPresent(module -> {
-			final StyleObjectModel model = this.loadingScreen.styleLoader.getStyle("main", new File(this.loadingScreen.loadingScreenDir, "screen.json"));
+			final StyleObjectModel model = this.loadingScreen.styleLoader.getStyle("main", this.loadingScreen.directories.jsonScreen);
 			fillBase(module.getManager(), model, null);
 		});
 	}
