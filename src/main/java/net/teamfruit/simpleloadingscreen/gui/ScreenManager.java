@@ -32,34 +32,30 @@ public class ScreenManager implements IManager {
 	@Override
 	public IComponent createComponent(final String id) {
 		for (final ScreenComponent component : this.loadingScreen.components)
-			if (StringUtils.equalsIgnoreCase(this.module.getModule().getID(), component.getModule().getID())&&StringUtils.equalsIgnoreCase(id, component.getID()))
-				throw new IllegalArgumentException("id '+id+' has been already created by this module.");
-		final ScreenComponent component = new ScreenComponent(this.loadingScreen, id, this.module);
+			if (StringUtils.equalsIgnoreCase(id, component.getID()))
+				if (component.complete(this.module, null))
+					return component;
+				else
+					throw new IllegalArgumentException("id '+id+' has been already created by this module.");
+		final ScreenComponent component = ScreenComponent.createComponent(this.loadingScreen, id, this.module);
 		this.loadingScreen.components.add(component);
 		return component;
 	}
 
 	@Override
-	public IComponent createComponent(String sourceId, final String id) {
+	public IComponent createComponent(final String sourceId, final String id) {
 		for (final ScreenComponent component : this.loadingScreen.components)
-			if (StringUtils.equalsIgnoreCase(this.module.getModule().getID(), component.getModule().getID())&&StringUtils.equalsIgnoreCase(id, component.getID()))
-				throw new IllegalArgumentException("id '+id+' has been already created by this module.");
-		String moduleid = null;
-		{
-			final String sep = ":";
-			final int col = sourceId.indexOf(sep);
-			if (col!=-1) {
-				moduleid = sourceId.substring(0, col);
-				sourceId = sourceId.substring(col+sep.length());
-			}
-		}
-		for (final ScreenComponent component : this.loadingScreen.components)
-			if (StringUtils.equalsIgnoreCase(moduleid!=null ? moduleid : this.module.getModule().getID(), component.getModule().getID())&&StringUtils.equalsIgnoreCase(sourceId, component.getID()))
-				return component.copy(id, this.module);
+			if (StringUtils.equalsIgnoreCase(id, component.getID()))
+				throw new IllegalArgumentException("id '+id+' has been already created.");
+		ScreenComponent sourceComponent = null;
 		for (final ScreenComponent component : this.loadingScreen.components)
 			if (StringUtils.equalsIgnoreCase(sourceId, component.getID()))
-				return component.copy(id, this.module);
-		return null;
+				sourceComponent = component;
+		if (sourceComponent==null) {
+			sourceComponent = ScreenComponent.createUncompletedComponent(this.loadingScreen, sourceId);
+			this.loadingScreen.components.add(sourceComponent);
+		}
+		return sourceComponent.copy(id, this.module);
 	}
 
 	@Override

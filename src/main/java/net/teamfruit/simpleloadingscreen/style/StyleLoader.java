@@ -34,9 +34,9 @@ public class StyleLoader {
 	private void fillBase(final StyleObjectModel target) {
 		for (final StyleObjectModel child : target.getChild())
 			fillBase(child);
-		final String base = target.getProperty().get("base");
-		if (base!=null) {
-			final StyleObjectModel source = getThemeStyle(base);
+		final String propBase = target.getProperty().get(StyleObjectModel.PropertyExtends);
+		if (propBase!=null) {
+			final StyleObjectModel source = getThemeStyle(propBase);
 			if (source!=null)
 				target.importSource(source);
 		}

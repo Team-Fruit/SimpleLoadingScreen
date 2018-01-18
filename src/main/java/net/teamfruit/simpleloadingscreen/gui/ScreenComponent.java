@@ -16,10 +16,10 @@ import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
 public class ScreenComponent implements IComponent {
-	private final ScreenComponent source;
+	private ScreenComponent source;
 	private final LoadingScreen loadingScreen;
 	private final String id;
-	private final ModuleContainer module;
+	private ModuleContainer module;
 	private final Map<String, Object> blackboard = Maps.newHashMap();
 	private final List<IRenderer> renderers = Lists.newArrayList();
 	private final List<IPropertyMapper> mappers = Lists.newArrayList();
@@ -31,8 +31,21 @@ public class ScreenComponent implements IComponent {
 		this.source = source;
 	}
 
-	public ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module) {
-		this(loadingScreen, id, module, null);
+	public static ScreenComponent createComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module) {
+		return new ScreenComponent(loadingScreen, id, module, null);
+	}
+
+	public static ScreenComponent createUncompletedComponent(final LoadingScreen loadingScreen, final String id) {
+		return new ScreenComponent(loadingScreen, id, null, null);
+	}
+
+	public boolean complete(final ModuleContainer module, final ScreenComponent source) {
+		if (this.module==null) {
+			this.module = module;
+			this.source = source;
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -42,6 +55,8 @@ public class ScreenComponent implements IComponent {
 
 	@Override
 	public IModule getModule() {
+		if (this.module==null)
+			throw new IllegalStateException("This component has not been completed.");
 		return this.module.getModule();
 	}
 

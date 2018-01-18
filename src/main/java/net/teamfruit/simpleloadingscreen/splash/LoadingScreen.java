@@ -4,11 +4,9 @@ import static net.teamfruit.simpleloadingscreen.reflect.ReflectionUtil.*;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 import cpw.mods.fml.client.SplashProgress;
 import cpw.mods.fml.common.asm.FMLSanityChecker;
@@ -17,7 +15,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.FileResourcePack;
 import net.teamfruit.simpleloadingscreen.Log;
 import net.teamfruit.simpleloadingscreen.api.IForgeSplashProperties;
-import net.teamfruit.simpleloadingscreen.gui.ScreenBlackboard;
 import net.teamfruit.simpleloadingscreen.gui.ScreenComponent;
 import net.teamfruit.simpleloadingscreen.gui.ScreenFontRenderer;
 import net.teamfruit.simpleloadingscreen.modules.ModuleDispatcher;
@@ -32,8 +29,6 @@ import net.teamfruit.simpleloadingscreen.style.StyleManager;
 public class LoadingScreen {
 	public static final LoadingScreen instance = new LoadingScreen();
 
-	public final Map<String, Object> blackboard;
-	public final ScreenBlackboard globalBlackboard;
 	public final List<ScreenComponent> components;
 	public final IForgeSplashProperties config;
 	public final ScreenFontRenderer fontRenderer;
@@ -49,8 +44,6 @@ public class LoadingScreen {
 	public LoadingScreen() {
 		final Minecraft mc = Minecraft.getMinecraft();
 
-		this.blackboard = Maps.newHashMap();
-		this.globalBlackboard = new ScreenBlackboard(this.blackboard);
 		this.components = Lists.newArrayList();
 
 		{

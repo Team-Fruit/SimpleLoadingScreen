@@ -7,6 +7,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class StyleObjectModel {
+	public static final String ComponentId = "id";
+	public static final String ComponentExtends = "component";
+	// public static final String PropertyId = "theme_id";
+	public static final String PropertyExtends = "theme";
+
 	transient Map<String, String> property;
 
 	transient Map<String, Object> blackboard;
