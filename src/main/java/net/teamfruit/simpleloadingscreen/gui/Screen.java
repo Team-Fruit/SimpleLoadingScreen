@@ -47,7 +47,7 @@ public class Screen implements IScreen {
 
 	@Override
 	public RelativeArea getRelativeArea() {
-		final Object obj = getComponent().getBlackboard().get("area");
+		final Object obj = getComponent().getCurrentBlackboard().get("area");
 		if (obj instanceof RelativeArea)
 			return (RelativeArea) obj;
 		return new RelativeArea();

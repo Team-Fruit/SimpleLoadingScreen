@@ -9,9 +9,9 @@ public class BaseModule implements IModule {
 	@Override
 	public boolean enable(final IManager manager) {
 		final IComponent forgeLogoComponent = manager.createComponent("forge_logo");
-		forgeLogoComponent.getRenderers().add(new ForgeLogoRenderer());
+		forgeLogoComponent.getCurrentRenderers().add(new ForgeLogoRenderer());
 		final IComponent barComponent = manager.createComponent("forge_bar");
-		barComponent.getRenderers().add(new ProgressBarRenderer());
+		barComponent.getCurrentRenderers().add(new ProgressBarRenderer());
 		return true;
 	}
 

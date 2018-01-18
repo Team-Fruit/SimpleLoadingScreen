@@ -1,6 +1,7 @@
 package net.teamfruit.simpleloadingscreen.gui;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -15,26 +16,23 @@ import net.teamfruit.simpleloadingscreen.modules.ModuleContainer;
 import net.teamfruit.simpleloadingscreen.splash.LoadingScreen;
 
 public class ScreenComponent implements IComponent {
+	private final ScreenComponent source;
 	private final LoadingScreen loadingScreen;
 	private final String id;
 	private final ModuleContainer module;
-	private final ModuleContainer authormodule;
-	private final Map<String, Object> blackboard;
-	private final List<IRenderer> renderers;
-	private final List<IPropertyMapper> mappers;
+	private final Map<String, Object> blackboard = Maps.newHashMap();
+	private final List<IRenderer> renderers = Lists.newArrayList();
+	private final List<IPropertyMapper> mappers = Lists.newArrayList();
 
-	private ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module, final ModuleContainer authormodule, final Map<String, Object> blackboard, final List<IRenderer> renderers, final List<IPropertyMapper> mappers) {
+	private ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module, final ScreenComponent source) {
 		this.loadingScreen = loadingScreen;
 		this.id = id;
 		this.module = module;
-		this.authormodule = authormodule;
-		this.blackboard = blackboard;
-		this.renderers = renderers;
-		this.mappers = mappers;
+		this.source = source;
 	}
 
 	public ScreenComponent(final LoadingScreen loadingScreen, final String id, final ModuleContainer module) {
-		this(loadingScreen, id, module, module, Maps.newHashMap(), Lists.newArrayList(), Lists.newArrayList());
+		this(loadingScreen, id, module, null);
 	}
 
 	@Override
@@ -49,7 +47,10 @@ public class ScreenComponent implements IComponent {
 
 	@Override
 	public IModule getAuthorModule() {
-		return this.authormodule.getModule();
+		final ScreenComponent parent = getSource();
+		if (parent!=null)
+			return parent.getAuthorModule();
+		return getModule();
 	}
 
 	@Override
@@ -61,22 +62,68 @@ public class ScreenComponent implements IComponent {
 	}
 
 	@Override
-	public Map<String, Object> getBlackboard() {
+	public ScreenComponent getSource() {
+		return this.source;
+	}
+
+	@Override
+	public Map<String, Object> getCurrentBlackboard() {
 		return this.blackboard;
 	}
 
 	@Override
-	public List<IRenderer> getRenderers() {
+	public List<IRenderer> getCurrentRenderers() {
 		return this.renderers;
 	}
 
 	@Override
-	public List<IPropertyMapper> getPropertyMappers() {
+	public List<IPropertyMapper> getCurrentPropertyMappers() {
 		return this.mappers;
 	}
 
+	@Override
+	public Map<String, Object> getBlackboard() {
+		final Map<String, Object> output = Maps.newHashMap();
+		getBlackboard(output);
+		return Collections.unmodifiableMap(output);
+	}
+
+	@Override
+	public List<IRenderer> getRenderers() {
+		final List<IRenderer> output = Lists.newArrayList();
+		getRenderers(output);
+		return Collections.unmodifiableList(output);
+	}
+
+	@Override
+	public List<IPropertyMapper> getPropertyMappers() {
+		final List<IPropertyMapper> output = Lists.newArrayList();
+		getPropertyMappers(output);
+		return Collections.unmodifiableList(output);
+	}
+
+	private void getBlackboard(final Map<String, Object> output) {
+		final ScreenComponent source = getSource();
+		if (source!=null)
+			source.getBlackboard(output);
+		output.putAll(getCurrentBlackboard());
+	}
+
+	private void getRenderers(final List<IRenderer> output) {
+		final ScreenComponent source = getSource();
+		if (source!=null)
+			source.getRenderers(output);
+		output.addAll(getCurrentRenderers());
+	}
+
+	private void getPropertyMappers(final List<IPropertyMapper> output) {
+		final ScreenComponent source = getSource();
+		if (source!=null)
+			source.getPropertyMappers(output);
+		output.addAll(getCurrentPropertyMappers());
+	}
+
 	public ScreenComponent copy(final String newid, final ModuleContainer newmodule) {
-		final ScreenComponent component = new ScreenComponent(this.loadingScreen, newid, newmodule, this.authormodule, Maps.newHashMap(this.blackboard), Lists.newArrayList(this.renderers), Lists.newArrayList(this.mappers));
-		return component;
+		return new ScreenComponent(this.loadingScreen, newid, newmodule, this);
 	}
 }

@@ -13,9 +13,17 @@ public interface IComponent {
 
 	File getWorkspace();
 
-	List<IRenderer> getRenderers();
-
 	IModule getAuthorModule();
+
+	IComponent getSource();
+
+	List<IRenderer> getCurrentRenderers();
+
+	Map<String, Object> getCurrentBlackboard();
+
+	List<IPropertyMapper> getCurrentPropertyMappers();
+
+	List<IRenderer> getRenderers();
 
 	Map<String, Object> getBlackboard();
 

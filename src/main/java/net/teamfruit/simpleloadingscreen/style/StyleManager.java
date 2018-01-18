@@ -48,10 +48,10 @@ public class StyleManager {
 			blackboard.put("component", component);
 		}
 		blackboard.put("area", area);
-		final Map<String, Object> cblackboard = component.getBlackboard();
+		final Map<String, Object> cblackboard = component.getCurrentBlackboard();
 		cblackboard.putAll(model.getProperty());
 		cblackboard.putAll(model.getBlackboard());
-		for (final IPropertyMapper mapper : component.getPropertyMappers())
+		for (final IPropertyMapper mapper : component.getCurrentPropertyMappers())
 			mapper.map(model.getProperty(), cblackboard);
 
 		manager.getRenderingComponents().add(component);
