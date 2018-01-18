@@ -53,6 +53,30 @@ public class ColorUtils {
 		return toColorCode((int) (r*255+.5f), (int) (g*255+.5f), (int) (b*255+.5f), (int) (a*255+.5f));
 	}
 
+	/**
+	 * int型RGBAカラーをカラーコードに変換します
+	 * <p>
+	 * フォントカラーの範囲は0～255です
+	 * @param rgb カラー
+	 * @param a カラー(不透明度)
+	 * @return カラーコード
+	 */
+	public static int toColorCode(final int rgb, final int a) {
+		return (a&0xff)<<24|rgb;
+	}
+
+	/**
+	 * float型RGBAカラーをカラーコードに変換します
+	 * <p>
+	 * フォントカラーの範囲は0～1です
+	 * @param rgb カラー
+	 * @param a カラー(不透明度)
+	 * @return カラーコード
+	 */
+	public static int toColorCode(final int rgb, final float a) {
+		return toColorCode(rgb, (int) (a*255+.5f));
+	}
+
 	public static void glColor4i(final int red, final int green, final int blue, final int alpha) {
 		glColor4f(red/255f, green/255f, blue/255f, alpha/255f);
 	}

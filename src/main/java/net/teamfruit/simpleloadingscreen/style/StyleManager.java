@@ -28,16 +28,12 @@ public class StyleManager {
 	}
 
 	private void fillBase(final IManager manager, final StyleObjectModel model, final RelativeArea parent) {
-		final RelativeArea area = new RelativeArea(parent, AreaConfigMapper.instance.createArea(model.getProperty()));
-		for (final StyleObjectModel child : model.getChild())
-			fillBase(manager, child, area);
-
-		String id = model.getProperty().get("id");
+		String id = model.getProperty().get(StyleObjectModel.ComponentId);
 		if (id==null)
 			id = UUID.randomUUID().toString();
 
 		final Map<String, Object> blackboard = model.getBlackboard();
-		final String source = model.getProperty().get("source");
+		final String source = model.getProperty().get(StyleObjectModel.ComponentExtends);
 		IComponent component = (IComponent) blackboard.get("component");
 		if (component==null) {
 			if (source!=null)
@@ -46,13 +42,17 @@ public class StyleManager {
 				component = manager.createComponent(id);
 			blackboard.put("component", component);
 		}
+		final RelativeArea area = new RelativeArea(parent, AreaConfigMapper.instance.createArea(model.getProperty()));
 		blackboard.put("area", area);
 		final Map<String, Object> cblackboard = component.getCurrentBlackboard();
 		cblackboard.putAll(model.getProperty());
 		cblackboard.putAll(model.getBlackboard());
-		for (final IPropertyMapper mapper : component.getCurrentPropertyMappers())
+		for (final IPropertyMapper mapper : component.getPropertyMappers())
 			mapper.map(model.getProperty(), cblackboard);
 
 		manager.getRenderingComponents().add(component);
+
+		for (final StyleObjectModel child : model.getChild())
+			fillBase(manager, child, area);
 	}
 }

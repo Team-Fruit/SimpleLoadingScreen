@@ -1,6 +1,5 @@
 package net.teamfruit.simpleloadingscreen.basemodule;
 
-import net.teamfruit.simpleloadingscreen.api.IComponent;
 import net.teamfruit.simpleloadingscreen.api.IManager;
 import net.teamfruit.simpleloadingscreen.api.IModule;
 
@@ -8,10 +7,9 @@ public class BaseModule implements IModule {
 
 	@Override
 	public boolean enable(final IManager manager) {
-		final IComponent forgeLogoComponent = manager.createComponent("forge_logo");
-		forgeLogoComponent.getCurrentRenderers().add(new ForgeLogoRenderer());
-		final IComponent barComponent = manager.createComponent("forge_bar");
-		barComponent.getCurrentRenderers().add(new ProgressBarRenderer());
+		manager.createComponent("fill").getCurrentRenderers().add(new FillRenderer());
+		manager.createComponent("forge_logo").getCurrentRenderers().add(new ForgeLogoRenderer());
+		manager.createComponent("forge_bar").getCurrentRenderers().add(new ProgressBarRenderer());
 		return true;
 	}
 
