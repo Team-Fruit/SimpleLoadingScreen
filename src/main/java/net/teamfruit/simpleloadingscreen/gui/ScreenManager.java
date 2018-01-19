@@ -30,32 +30,41 @@ public class ScreenManager implements IManager {
 	}
 
 	@Override
-	public IComponent createComponent(final String id) {
+	public ScreenComponent createComponent(final String id) {
 		for (final ScreenComponent component : this.loadingScreen.components)
 			if (StringUtils.equalsIgnoreCase(id, component.getID()))
 				if (component.complete(this.module, null))
 					return component;
 				else
-					throw new IllegalArgumentException("id '+id+' has been already created by this module.");
+					throw new IllegalArgumentException("id '+id+' has been already created.");
 		final ScreenComponent component = ScreenComponent.createComponent(this.loadingScreen, id, this.module);
 		this.loadingScreen.components.add(component);
 		return component;
 	}
 
 	@Override
-	public IComponent createComponent(final String sourceId, final String id) {
-		for (final ScreenComponent component : this.loadingScreen.components)
-			if (StringUtils.equalsIgnoreCase(id, component.getID()))
-				throw new IllegalArgumentException("id '+id+' has been already created.");
-		ScreenComponent sourceComponent = null;
-		for (final ScreenComponent component : this.loadingScreen.components)
-			if (StringUtils.equalsIgnoreCase(sourceId, component.getID()))
-				sourceComponent = component;
+	public ScreenComponent createComponent(final String sourceId, final String id) {
+		ScreenComponent sourceComponent = getComponent(sourceId);
 		if (sourceComponent==null) {
 			sourceComponent = ScreenComponent.createUncompletedComponent(this.loadingScreen, sourceId);
 			this.loadingScreen.components.add(sourceComponent);
 		}
+		for (final ScreenComponent component : this.loadingScreen.components)
+			if (StringUtils.equalsIgnoreCase(id, component.getID()))
+				if (component.complete(this.module, sourceComponent))
+					return component;
+				else
+					throw new IllegalArgumentException("id '+id+' has been already created.");
 		return sourceComponent.copy(id, this.module);
+	}
+
+	@Override
+	public ScreenComponent getComponent(final String sourceId) {
+		ScreenComponent sourceComponent = null;
+		for (final ScreenComponent component : this.loadingScreen.components)
+			if (StringUtils.equalsIgnoreCase(sourceId, component.getID()))
+				sourceComponent = component;
+		return sourceComponent;
 	}
 
 	@Override

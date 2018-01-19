@@ -8,6 +8,8 @@ public interface IManager {
 
 	IComponent createComponent(String sourceId, String id);
 
+	IComponent getComponent(String sourceId);
+
 	IModule getModule(String id);
 
 	IConfig loadConfig(File configFile);

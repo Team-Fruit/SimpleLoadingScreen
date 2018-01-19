@@ -78,6 +78,8 @@ public class ScreenComponent implements IComponent {
 
 	@Override
 	public ScreenComponent getSource() {
+		if (this.source!=null&&this.source.module==null)
+			throw new IllegalStateException("This component tree has not been completed yet.");
 		return this.source;
 	}
 
@@ -92,7 +94,7 @@ public class ScreenComponent implements IComponent {
 	}
 
 	@Override
-	public List<IPropertyMapper> getCurrentPropertyMappers() {
+	public List<IPropertyMapper> getCurrentPropertyMappers() {Observable
 		return this.mappers;
 	}
 
