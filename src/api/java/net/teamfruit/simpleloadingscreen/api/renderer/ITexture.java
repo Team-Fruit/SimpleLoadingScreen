@@ -1,6 +1,7 @@
 package net.teamfruit.simpleloadingscreen.api.renderer;
 
 import net.minecraft.util.ResourceLocation;
+import net.teamfruit.simpleloadingscreen.api.position.Area;
 
 public interface ITexture {
 
@@ -25,5 +26,7 @@ public interface ITexture {
 	int getName();
 
 	ResourceLocation getLocation();
+
+	Area getTexArea(int frame);
 
 }

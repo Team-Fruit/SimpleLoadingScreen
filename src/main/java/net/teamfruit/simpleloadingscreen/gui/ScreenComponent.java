@@ -94,7 +94,7 @@ public class ScreenComponent implements IComponent {
 	}
 
 	@Override
-	public List<IPropertyMapper> getCurrentPropertyMappers() {Observable
+	public List<IPropertyMapper> getCurrentPropertyMappers() {
 		return this.mappers;
 	}
 

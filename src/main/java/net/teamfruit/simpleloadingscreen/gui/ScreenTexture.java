@@ -19,6 +19,7 @@ import cpw.mods.fml.client.SplashProgress;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.ResourceLocation;
 import net.teamfruit.simpleloadingscreen.Log;
+import net.teamfruit.simpleloadingscreen.api.position.Area;
 import net.teamfruit.simpleloadingscreen.api.renderer.ITexture;
 import net.teamfruit.simpleloadingscreen.resources.ResourceLoader;
 
@@ -149,5 +150,10 @@ public class ScreenTexture implements ITexture {
 	@Override
 	public void texCoord(final int frame, final float u, final float v) {
 		glTexCoord2f(getU(frame, u), getV(frame, v));
+	}
+
+	@Override
+	public Area getTexArea(final int frame) {
+		return Area.abs(getU(frame, 0), getV(frame, 0), getU(frame, 1), getV(frame, 1));
 	}
 }
